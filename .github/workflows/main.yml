@@ -13,8 +13,8 @@ concurrency:
 jobs:
   minitest:
     env:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_USER: root
+      POSTGRES_PASSWORD: tpos123
 
     strategy:
       fail-fast: false
