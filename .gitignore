@@ -32,3 +32,4 @@
 .DS_Store
 
 .byebug_history
+/config/production_env.yml
