@@ -1,4 +1,5 @@
 class VerificationCode < ApplicationRecord
-    enum :type, { :sign_in 0, :sign_up 1 }
-    enum :send_method { :sms_otp 0, :email 1 }
+    enum kind: { sign_up: 0,sign_in: 1 }
+    enum send_method: { sms_otp: 0, email: 1 }
+    enum status: { unverified: 0,verified:1 }
 end

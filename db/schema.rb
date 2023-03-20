@@ -127,8 +127,9 @@ ActiveRecord::Schema[7.0].define(version: 2023_03_20_100434) do
   create_table "verification_codes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.text "hash_code", null: false
     t.datetime "expiry_time", null: false
-    t.integer "type", null: false
+    t.integer "kind", null: false
     t.integer "send_method", null: false
+    t.integer "status", default: 0, null: false
     t.string "mail_or_phone_to", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
