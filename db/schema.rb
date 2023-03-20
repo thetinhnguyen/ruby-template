@@ -10,9 +10,37 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2022_02_12_195921) do
+ActiveRecord::Schema[7.0].define(version: 2023_03_20_081759) do
   # These are extensions that must be enabled in order to support this database
+  enable_extension "pgcrypto"
   enable_extension "plpgsql"
+
+  create_table "branches", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "phone_number"
+    t.string "email"
+    t.uuid "store_id", null: false
+    t.uuid "provice_id"
+    t.uuid "district_id"
+    t.uuid "ward_id"
+    t.string "detail_address"
+    t.uuid "admin_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_branches_on_district_id"
+    t.index ["provice_id"], name: "index_branches_on_provice_id"
+    t.index ["store_id"], name: "index_branches_on_store_id"
+    t.index ["ward_id"], name: "index_branches_on_ward_id"
+  end
+
+  create_table "districts", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.uuid "provice_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_districts_on_name", unique: true
+    t.index ["provice_id"], name: "index_districts_on_provice_id"
+  end
 
   create_table "oauth_access_tokens", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "resource_owner_type"
@@ -43,6 +71,31 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_12_195921) do
     t.index ["uid"], name: "index_oauth_applications_on_uid", unique: true
   end
 
+  create_table "provices", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["name"], name: "index_provices_on_name", unique: true
+  end
+
+  create_table "receptionists", id: false, force: :cascade do |t|
+    t.uuid "branche_id"
+    t.uuid "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["branche_id"], name: "index_receptionists_on_branche_id"
+    t.index ["user_id"], name: "index_receptionists_on_user_id"
+  end
+
+  create_table "stores", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.string "phone_number"
+    t.string "email"
+    t.uuid "admin_user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -56,9 +109,42 @@ ActiveRecord::Schema[7.0].define(version: 2022_02_12_195921) do
     t.string "last_sign_in_ip"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.string "name"
+    t.boolean "gender"
+    t.string "phone_number", null: false
+    t.uuid "provice_id"
+    t.uuid "district_id"
+    t.uuid "ward_id"
+    t.string "detail_address"
+    t.index ["district_id"], name: "index_users_on_district_id"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["phone_number"], name: "index_users_on_phone_number", unique: true
+    t.index ["provice_id"], name: "index_users_on_provice_id"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+    t.index ["ward_id"], name: "index_users_on_ward_id"
   end
 
+  create_table "wards", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.string "name", null: false
+    t.uuid "district_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["district_id"], name: "index_wards_on_district_id"
+    t.index ["name"], name: "index_wards_on_name", unique: true
+  end
+
+  add_foreign_key "branches", "districts"
+  add_foreign_key "branches", "provices"
+  add_foreign_key "branches", "stores"
+  add_foreign_key "branches", "users", column: "admin_user_id"
+  add_foreign_key "branches", "wards"
+  add_foreign_key "districts", "provices"
   add_foreign_key "oauth_access_tokens", "oauth_applications", column: "application_id"
+  add_foreign_key "receptionists", "branches", column: "branche_id"
+  add_foreign_key "receptionists", "users"
+  add_foreign_key "stores", "users", column: "admin_user_id"
+  add_foreign_key "users", "districts"
+  add_foreign_key "users", "provices"
+  add_foreign_key "users", "wards"
+  add_foreign_key "wards", "districts"
 end

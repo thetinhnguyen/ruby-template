@@ -33,6 +33,16 @@ class DeviseCreateUsers < ActiveRecord::Migration[7.0]
       # t.datetime :locked_at
 
       t.timestamps null: false
+
+      ## extentions
+      t.string :name
+      # 0: Female 1: male null: other
+      t.boolean :gender
+      t.string :phone_number,null: false,index: { unique: true }
+      t.belongs_to :provice,foreign_key: true,type: :uuid
+      t.belongs_to :district,foreign_key: true,type: :uuid
+      t.belongs_to :ward,foreign_key: true,type: :uuid
+      t.string :detail_address
     end
 
     add_index :users, :email,                unique: true
