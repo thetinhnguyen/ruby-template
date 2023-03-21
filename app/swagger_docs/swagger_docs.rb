@@ -13,20 +13,19 @@ class SwaggerDocs
 
   V1_SWAGGERED_CLASSES = [
     ## Controllers ##
-    Controllers::V1::Users::TokensController,
-    Controllers::V1::Users::RegistrationsController,
-    Controllers::V1::Users::PasswordsController,
+    # Controllers::V1::Users::TokensController,
+    # Controllers::V1::Users::RegistrationsController,
+    # Controllers::V1::Users::PasswordsController,
+    Controllers::V1::Users::AuthController,
     ## Inputs ##
-    Inputs::V1::User::SignInInput,
+
+    Inputs::V1::User::SendOtpInput,
+    Inputs::V1::User::VerifyOtpInput,
     Inputs::V1::User::SignUpInput,
-    Inputs::V1::User::ResetPasswordInput,
-    Inputs::V1::User::UpdatePasswordInput,
-    Inputs::V1::User::RevokeInput,
+    
     ## Responses ##
-    Responses::V1::User::SignInResponse,
+    Responses::V1::User::VerifyOtpResponse,
     Responses::V1::User::SignUpResponse,
-    Responses::V1::User::ResetPasswordResponse,
-    Responses::V1::User::UpdatePasswordResponse,
     ## Models ##
     self
   ].concat(COMMON_SWAGGERED_CLASSES)

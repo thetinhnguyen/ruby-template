@@ -3,11 +3,11 @@
 module Responses
   module V1
     module User
-      class SignInResponse
+      class VerifyOtpResponse
         include Swagger::Blocks
 
         swagger_component do
-          schema :UserSignInSuccessResponse do
+          schema :VerifyOtpResponse do
             key :type, :object
             key :required, %i[access_token token_type expires_in refresh_token created_at user]
 
