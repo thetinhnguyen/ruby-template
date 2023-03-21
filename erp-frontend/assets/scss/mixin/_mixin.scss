@@ -1,0 +1,23 @@
+@mixin tbl {
+  @media (min-width: 600px) and (max-width: 1263px) {
+    @content;
+  }
+}
+
+@mixin md {
+  @media (min-width: 1264px) and (max-width: 1368px) {
+    @content;
+  }
+}
+
+@mixin lg {
+  @media (min-width: 1369px) {
+    @content;
+  }
+}
+
+//vw指定
+@function vw($size, $viewport: 768) {
+  $rate: calc(100 / #{$viewport});
+  @return calc(#{$rate} * #{$size} * 1vw);
+}

@@ -59,3 +59,66 @@ flowchart TD
    ```bash
    ./bin/dev
    ```
+# Welcome to SALON MANAGER APP
+
+This is a flexible system for owner to manage they Salon, Spa, Massage Store.
+
+## Getting start with developer:
+
+1. Setup locally - without Docker
+
+    [Redis](https://redis.io/) should be setup and running.
+    Run this command for starting redis. 
+
+    ```console
+    $ redis-server
+    ```
+    
+    Migrate develop database
+    ```ruby
+   bin/rails db:migrate RAILS_ENV=server
+    ```
+
+   Migrate test database
+    ```ruby
+   bin/rails db:migrate RAILS_ENV=test
+    ```
+
+    Start the local server
+    ```ruby
+    RAILS_ENV=server rails s
+    ```
+    
+    Browser project in http://localhost:3000/
+
+2. Setup locally - without Docker 
+
+- Let’s compose our application
+   ```console
+   $ docker-compose build
+   ```
+
+- Install dependencies
+   ```console
+   $ docker-compose run web bundle install
+   ```
+
+- Create and migrate DB
+   ```console
+  $ docker-compose run web rails db:create db:migrate
+   ```   
+
+- Start application
+    ```console
+   $ docker-compose up
+   ```
+  
+- PGadmin dasboard: http://localhost:16543/browser/
+
+- Main dasboard: http://localhost:3000/
+
+3. Testing
+- Requires passing 3 tests below:
+  - Rubocop
+  - Capybara
+  - Rspec

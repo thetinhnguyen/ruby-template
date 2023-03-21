@@ -1,0 +1,83 @@
+@charset 'UTF-8';
+@use '../colors';
+@use '../text';
+@use '../mixin/mixin' as mi;
+
+/* ------------------------------------
+welcome page
+------------------------------------ */
+
+.l-page-welcome {
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+  }
+
+  .l-frame-content {
+    text-align: center;
+    width: 100%;
+    height: 70%;
+  }
+
+  .logo-head {
+
+    @include mi.lg {
+      a { width: 15%; }
+    }
+
+    @include mi.md {
+      a { width: 15%; }
+    }
+  }
+  
+  .custom-carousel {
+    width: 65%;
+    border-radius: 8px;
+    margin: 0 auto;
+
+    @include mi.tbl { height: mi.vw(250) !important; }
+
+    @include mi.md { 
+      width: 55%;
+      height: 65% !important;
+    }
+
+    @include mi.lg { height: 65% !important; }
+
+    .fill-height {
+      margin: 0 !important;
+    }
+
+    .v-window__container {
+      height: 100%;
+    }
+  }
+
+  .text-center {
+    line-height: 2;
+
+    &.mt-5 {
+      @include mi.md { margin-top: 10px !important; }
+    }
+
+    span,
+    strong {
+      color: colors.$blue-purple;
+    }
+  }
+
+  .l-frame__btn {
+    
+    .mt-5 {
+      @include mi.md { margin-top: 10px !important; }
+    }
+  }
+
+  .l-frame-footer {
+    @include mi.md { margin-top: 10px !important; }
+  }
+}
